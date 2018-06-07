@@ -1,0 +1,31 @@
+import math as m
+import csv
+import mne
+import os.path as op
+from mne.datasets import sample
+import numpy as np
+from mne.viz import plot_alignment
+from matplotlib import pyplot as plt
+
+
+#mydata = mne.io.read_raw_brainvision('/Users/Carpetli/Desktop/demo_2.vhdr', montage=None,eog=('HEOGL', 'HEOGR', 'VEOGb'), misc='auto', scale=1.0, preload=False, response_trig_shift=0, event_id=None, verbose=None)
+
+mydata = mne.io.read_raw_brainvision('/Users/Carpetli/Desktop/demo_2.vhdr', montage=None,eog=('HEOGL', 'HEOGR', 'VEOGb'), misc='auto', scale=1.0, preload=False, response_trig_shift=0, event_id=None, verbose=None)
+
+data_path = op.join('/','Users','Carpetli','Desktop')
+
+raw = mne.io.read_raw_brainvision(op.join(data_path, 'demo_2.vhdr'),preload=True)
+
+
+#raw.plot(block=True, lowpass=40)
+
+print('sample rate:', raw.info['sfreq'], 'Hz')
+# Give the size of the data matrix
+print('%s channels x %s samples' % (len(raw), len(raw.times)))
+
+# Extract data from the first 5 channels, from 1 s to 3 s.
+sfreq = raw.info['sfreq']
+data, times = raw[:30, int(sfreq * 1):int(sfreq * 3)]
+_ = plt.plot(times, data.T)
+_ = plt.title('Sample channels')
+
