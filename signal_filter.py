@@ -31,7 +31,8 @@ class Filter():
 		new_signal = [signal.convolve(covolve_input,self.data[channel,:]) for channel in channels]
 
 		print("new signals length", len(new_signal[0]))
-		print("new signals length", len(new_signal[1]))		
+		print("new signals length", len(new_signal[1]))
+		self.times = signal.convolve(covolve_input,times)	
 		return new_signal
 		# signals = self.raw.readsomething[]
 		# signals = signal.firwin2(n, freq, gain, nyq=nyq)
